@@ -1,13 +1,10 @@
 package com.example.springsecuritydemo.controller;
 
-import com.example.springsecuritydemo.model.Post;
 import com.example.springsecuritydemo.model.User;
-import com.example.springsecuritydemo.repository.UserRepository;
-import com.example.springsecuritydemo.service.PostService;
+import com.example.springsecuritydemo.service.RegistrationService;
+import com.example.springsecuritydemo.model.Users;
 import com.example.springsecuritydemo.service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +14,7 @@ import java.util.List;
 @CrossOrigin
 public class UserController {
     private UserService userService;
-    private PostService postService;
-
+    private RegistrationService RegistrationService;
     @GetMapping("/")
     public String hello(){
         return "Hello world";
@@ -27,6 +23,10 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getUsers(){
         return userService.getAll();
+    }
+    @PostMapping(path="/authorization")
+    public String register(@RequestBody Users request) {
+        return RegistrationService.register(request);
     }
 
     @GetMapping("/users/{userId}")

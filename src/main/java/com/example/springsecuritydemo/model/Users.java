@@ -1,10 +1,9 @@
-package com.example.springsecuritydemo.security;
+package com.example.springsecuritydemo.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,13 +28,9 @@ public class Users implements UserDetails {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private Roles Roles;
+    private com.example.springsecuritydemo.model.Roles Roles;
     private Boolean locked = false;
     private Boolean enabled = false;
-
-    public Users(String firstName, String lastName, String email, String password) {
-
-    }
 
     public Users(String firstName, String lastName, String email, String password, Roles appUserRole) {
         this.firstName = firstName;
@@ -47,7 +42,7 @@ public class Users implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Roles.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+Roles);
         return Collections.singletonList(authority);
     }
 
